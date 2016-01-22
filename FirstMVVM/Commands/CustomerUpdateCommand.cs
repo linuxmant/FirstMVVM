@@ -19,7 +19,7 @@ namespace FirstMVVM.Commands {
 		}
 
 		public bool CanExecute(object parameter) {
-			return string.IsNullOrWhiteSpace(viewModel.Customer.Error);
+			return viewModel.Customer.IsValid;
 		}
 
 		public void Execute(object parameter) {

@@ -1,14 +1,17 @@
 ﻿using FirstMVVM.Commands;
 using FirstMVVM.Models;
-using System.Windows;
+using FirstMVVM.Views;
 using System.Windows.Input;
 
 namespace FirstMVVM.ViewModels {
 	internal class CustomerViewModel {
 		private Customer customer;
+		private CustomerInfoViewModel childViewModel;
+
 
 		public CustomerViewModel() {
 			customer = new Customer("biteme");
+			childViewModel = new CustomerInfoViewModel() { Info = "Instantiated in CustomerViwModel ctor." };
 			UpdateCommand = new CustomerUpdateCommand(this);
 		}
 
@@ -18,7 +21,12 @@ namespace FirstMVVM.ViewModels {
 		}
 
 		public void SaveChanges() {
-			MessageBox.Show(string.Format("Customer {0} saved.", Customer.Name));
+			CustomerInfoView view = new CustomerInfoView();
+			view.DataContext = childViewModel;
+
+			//childViewModel.Info = Customer.Name + " was updated on the database.";
+
+			view.Show();
 		}
 
 		public ICommand UpdateCommand {

@@ -31,24 +31,52 @@ namespace FirstMVVM.Models {
 
 		#region IDataErrorInfo Members
 
-		public string Error
+		string IDataErrorInfo.Error
 		{
-			get;
-			private set;
+			get { return null; }
 		}
 
-		public string this[string columnName]
+		string IDataErrorInfo.this[string propertyName]
 		{
+			get { return GetValidationError(propertyName); }
+		}
+
+		#endregion
+
+		#region Validation
+
+		public bool IsValid {
 			get {
-				if(columnName == "Name") {
-					if(string.IsNullOrWhiteSpace(Name)) {
-						Error = "Name cannot be null or empty";
-					} else {
-						Error = null;
+				foreach(string property in ValidateProperties) {
+					if (GetValidationError(property) != null) {
+						return false;
 					}
 				}
-				return Error;
+				return true;
 			}
+		}
+
+		static readonly string[] ValidateProperties = {
+			"Name"
+		};
+
+		string GetValidationError(string propertyName) {
+			string error = null;
+
+			switch (propertyName) {
+				case "Name":
+					error = ValidateCustomerName();
+					break;
+			}
+
+			return error;
+		}
+
+		private string ValidateCustomerName() {
+			if (string.IsNullOrWhiteSpace(Name)) {
+				return "Name cannot be null or empty";
+			}
+			return null;
 		}
 
 		#endregion

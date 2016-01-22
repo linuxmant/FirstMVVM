@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FirstMVVM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="185.516" Width="368.067">
     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
         <Label>Customer Name</Label>
-        <TextBox Text="{Binding Customer.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="325"></TextBox>
-        <Button Command="{Binding UpdateCommand}" >Save</Button>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+            <TextBox Name="CustomerName" Text="{Binding Customer.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="225"
+                     Validation.ValidationAdornerSite="{Binding ElementName=adorner}" VerticalAlignment="Center"/>
+            <Label Name="adorner" Content="{Binding ElementName=CustomerName, Path='(Validation.Errors).CurrentItem.ErrorContent'}" Foreground="Red"/>
+        </StackPanel>
+        <Button Command="{Binding UpdateCommand}">Save</Button>
     </StackPanel>
 </Window>
