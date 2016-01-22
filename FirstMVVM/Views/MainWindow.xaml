@@ -1,4 +1,4 @@
-﻿<Window x:Class="FirstMVVM.MainWindow"
+﻿<Window x:Class="FirstMVVM.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:FirstMVVM"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+        <Label>Customer Name</Label>
+        <TextBox Text="{Binding Customer.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="325"></TextBox>
+        <Button Command="{Binding UpdateCommand}" >Save</Button>
+    </StackPanel>
 </Window>
